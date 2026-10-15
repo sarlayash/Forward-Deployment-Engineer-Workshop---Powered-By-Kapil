@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LearnerProfile } from '../types/workshop';
-import { Terminal, Award, FileCode2, BookOpen, User, Briefcase, GraduationCap } from 'lucide-react';
+import {
+  Terminal,
+  Award,
+  FileCode2,
+  BookOpen,
+  User,
+  Briefcase,
+  GraduationCap,
+  LogOut,
+  RotateCcw,
+  Sparkles,
+  ChevronDown,
+} from 'lucide-react';
 
 interface NavbarProps {
   currentTab: string;
   onSelectTab: (tab: string) => void;
   learner: LearnerProfile;
   onOpenProfile: () => void;
+  onSignOff: () => void;
+  onResetProgress: () => void;
+  onViewFounderNote: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -14,7 +29,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectTab,
   learner,
   onOpenProfile,
+  onSignOff,
+  onResetProgress,
+  onViewFounderNote,
 }) => {
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+
   const navItems = [
     { id: 'curriculum', label: 'Curriculum (15 Days)', icon: BookOpen },
     { id: 'ide', label: 'Hands-on IDE', icon: FileCode2 },
@@ -30,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Zone 1: Single text element wordmark */}
         <button
           onClick={() => onSelectTab('curriculum')}
-          className="flex items-center gap-2.5 text-left group focus:outline-none"
+          className="flex items-center gap-2.5 text-left group focus:outline-none cursor-pointer"
         >
           <div className="w-8 h-8 rounded-lg bg-[#EFE5D6] border border-[#D5C4AC] flex items-center justify-center text-[#7C3E1D] group-hover:border-[#7C3E1D] transition-colors">
             <Terminal className="w-4 h-4" />
@@ -53,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 key={item.id}
                 onClick={() => onSelectTab(item.id)}
-                className={`flex items-center gap-1.5 whitespace-nowrap shrink-0 transition-colors py-1 ${
+                className={`flex items-center gap-1.5 whitespace-nowrap shrink-0 transition-colors py-1 cursor-pointer ${
                   isActive
                     ? 'text-[#7C3E1D] border-b-2 border-[#7C3E1D] font-bold'
                     : 'text-[#6A5342] hover:text-[#24150D]'
@@ -65,25 +85,81 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        {/* Zone 3: 1 Primary Action */}
-        <div className="flex items-center gap-3 shrink-0">
+        {/* Zone 3: User Profile & Actions Dropdown */}
+        <div className="relative flex items-center gap-2 shrink-0">
           <button
-            onClick={onOpenProfile}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#3D291C] bg-[#FAF7F2] border border-[#D5C4AC] rounded-lg hover:border-[#7C3E1D] hover:bg-white shadow-xs transition-all whitespace-nowrap shrink-0"
+            onClick={() => setShowUserDropdown(!showUserDropdown)}
+            className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-[#3D291C] bg-[#FAF7F2] border border-[#D5C4AC] rounded-lg hover:border-[#7C3E1D] hover:bg-white shadow-xs transition-all whitespace-nowrap shrink-0 cursor-pointer"
           >
             <User className="w-3.5 h-3.5 text-[#7C3E1D]" />
-            <span className="truncate max-w-[120px] font-semibold text-[#24150D]">
-              {learner.name || 'New Learner'}
+            <span className="truncate max-w-[110px] font-semibold text-[#24150D]">
+              {learner.name || 'Learner'}
             </span>
             <span className="text-[#B8A388]">·</span>
             <span className="text-[#7C3E1D] font-mono font-bold">
-              {learner.completedDays.length}/15 Days
+              {learner.completedDays.length}/15
             </span>
-            <span className="text-[#B8A388]">·</span>
-            <span className="text-[#9A5B13] font-mono font-medium">
-              {learner.xp} XP
-            </span>
+            <ChevronDown className={`w-3.5 h-3.5 text-[#8C7360] transition-transform ${showUserDropdown ? 'rotate-180' : ''}`} />
           </button>
+
+          {/* User Dropdown Menu */}
+          {showUserDropdown && (
+            <div className="absolute right-0 top-full mt-2 w-56 bg-[#FFFFFF] border-2 border-[#D5C4AC] rounded-xl shadow-xl py-2 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
+              <div className="px-3 py-2 border-b border-[#EFE5D6]">
+                <span className="text-[10px] uppercase font-mono text-[#8C7360] block">Signed in as</span>
+                <span className="font-bold text-[#24150D] truncate block">{learner.name || 'Anonymous Learner'}</span>
+                <span className="text-[11px] text-[#7C3E1D] font-mono block mt-0.5">{learner.xp} XP Earned</span>
+              </div>
+
+              <div className="py-1">
+                <button
+                  onClick={() => {
+                    setShowUserDropdown(false);
+                    onOpenProfile();
+                  }}
+                  className="w-full text-left px-3 py-2 flex items-center gap-2 text-[#4A3528] hover:bg-[#FAF7F2] hover:text-[#24150D] transition-colors"
+                >
+                  <User className="w-3.5 h-3.5 text-[#8C7360]" />
+                  <span>Edit Profile & Track</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setShowUserDropdown(false);
+                    onViewFounderNote();
+                  }}
+                  className="w-full text-left px-3 py-2 flex items-center gap-2 text-[#4A3528] hover:bg-[#FAF7F2] hover:text-[#24150D] transition-colors"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#7C3E1D]" />
+                  <span>Founder's Welcome Note</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setShowUserDropdown(false);
+                    onResetProgress();
+                  }}
+                  className="w-full text-left px-3 py-2 flex items-center gap-2 text-[#8C4A23] hover:bg-[#FAF7F2] transition-colors"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Reset All Progress</span>
+                </button>
+              </div>
+
+              <div className="pt-1 border-t border-[#EFE5D6]">
+                <button
+                  onClick={() => {
+                    setShowUserDropdown(false);
+                    onSignOff();
+                  }}
+                  className="w-full text-left px-3 py-2 flex items-center gap-2 text-[#A14725] font-semibold hover:bg-[#FDF0EB] transition-colors"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Sign Off</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

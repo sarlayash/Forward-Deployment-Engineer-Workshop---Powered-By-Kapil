@@ -9,6 +9,7 @@ import {
   MessageSquare,
   ArrowRight,
 } from 'lucide-react';
+import kapilRealPhoto from '../assets/images/mentor_kapil_narula_1792041458811.jpg';
 
 export const MentorKapilView: React.FC = () => {
   const [selectedTopic, setSelectedTopic] = useState<number>(0);
@@ -78,10 +79,9 @@ export const MentorKapilView: React.FC = () => {
           {/* Portrait Column */}
           <div className="md:col-span-5 relative min-h-[320px] bg-[#1C140E]">
             <img
-              src="/src/assets/images/mentor_kapil_narula_1792041458811.jpg"
+              src={kapilRealPhoto}
               alt="Kapil Narula - Forward Deployment Lead"
               className="w-full h-full object-cover object-top"
-              referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#1C140E] via-transparent to-transparent md:hidden" />
           </div>

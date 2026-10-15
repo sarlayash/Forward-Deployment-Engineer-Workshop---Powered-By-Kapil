@@ -70,6 +70,8 @@ export interface LearnerProfile {
   codeDrafts: Record<number, string>;
   certificateIssued: boolean;
   certificateId: string;
+  hasAgreedToFounderNote?: boolean;
+  isAuthenticated?: boolean;
 }
 
 export interface InterviewQuestion {

@@ -11,6 +11,7 @@ import {
   Printer,
   Copy,
 } from 'lucide-react';
+import goldEmblem from '../assets/images/fde_cert_gold_emblem_1792041458799.jpg';
 
 interface CertificateViewProps {
   learner: LearnerProfile;
@@ -160,10 +161,9 @@ export const CertificateView: React.FC<CertificateViewProps> = ({ learner, total
           {/* Golden Seal Generated Asset */}
           <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-[#8C4A23] shadow-lg shadow-[#8C4A23]/20 shrink-0">
             <img
-              src="/src/assets/images/fde_cert_gold_emblem_1792041458799.jpg"
+              src={goldEmblem}
               alt="Engineering Excellence Golden Crest"
               className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
             />
           </div>
 

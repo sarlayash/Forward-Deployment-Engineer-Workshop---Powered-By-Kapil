@@ -3,11 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { CURRICULUM_DATA } from './data/curriculumData';
 import { BADGES_DATA } from './data/badgesData';
 import { LearnerProfile } from './types/workshop';
-import { loadLearnerProfile, saveLearnerProfile } from './utils/storage';
+import {
+  loadLearnerProfile,
+  saveLearnerProfile,
+  resetProgress,
+  signOutLearner,
+  fullSystemReset,
+} from './utils/storage';
 import { Navbar } from './components/Navbar';
 import { IDEWorkspace } from './components/IDEWorkspace';
 import { CurriculumOverview } from './components/CurriculumOverview';
@@ -16,17 +22,41 @@ import { CertificateView } from './components/CertificateView';
 import { InterviewPlaybookView } from './components/InterviewPlaybookView';
 import { MentorKapilView } from './components/MentorKapilView';
 import { OnboardingModal } from './components/OnboardingModal';
+import { FounderWelcomeView } from './components/FounderWelcomeView';
+import { LoginPage } from './components/LoginPage';
 
 export default function App() {
   const [learner, setLearner] = useState<LearnerProfile>(loadLearnerProfile);
   const [currentTab, setCurrentTab] = useState<string>('curriculum');
   const [selectedDayId, setSelectedDayId] = useState<number>(learner.currentDay || 1);
-  const [showProfileModal, setShowProfileModal] = useState<boolean>(!learner.name);
+  const [showProfileModal, setShowProfileModal] = useState<boolean>(false);
+  const [reviewingFounderNote, setReviewingFounderNote] = useState<boolean>(false);
 
-  // Sync profile changes to localStorage
+  // Sync profile changes to state and localStorage
   const updateLearner = (newProfile: LearnerProfile) => {
     setLearner(newProfile);
     saveLearnerProfile(newProfile);
+  };
+
+  // Sign Off handler
+  const handleSignOff = () => {
+    const signedOut = signOutLearner(learner);
+    setLearner(signedOut);
+  };
+
+  // Reset Progress handler
+  const handleResetProgress = () => {
+    if (
+      window.confirm(
+        'Are you sure you want to reset your bootcamp progress? All completed days, test records, earned badges, and code drafts will be reset to Day 1.'
+      )
+    ) {
+      const reset = resetProgress(learner);
+      setLearner(reset);
+      setSelectedDayId(1);
+      setCurrentTab('curriculum');
+      alert('Your bootcamp progress has been reset to Day 1.');
+    }
   };
 
   // Handle completion of a day in the IDE
@@ -67,6 +97,51 @@ export default function App() {
     updateLearner(updatedProfile);
   };
 
+  // 1. Initial State: Founder's Note screen if not yet agreed or when explicitly reviewed
+  if (!learner.hasAgreedToFounderNote || reviewingFounderNote) {
+    return (
+      <FounderWelcomeView
+        onAgreeAndProceed={() => {
+          updateLearner({
+            ...learner,
+            hasAgreedToFounderNote: true,
+          });
+          setReviewingFounderNote(false);
+        }}
+        onReset={() => {
+          if (window.confirm('Reset all saved learner credentials and progress?')) {
+            const fresh = fullSystemReset();
+            setLearner(fresh);
+            setReviewingFounderNote(false);
+          }
+        }}
+        onSignOff={handleSignOff}
+      />
+    );
+  }
+
+  // 2. Second State: Login / Identity Setup page if not authenticated
+  if (!learner.isAuthenticated) {
+    return (
+      <LoginPage
+        currentProfile={learner}
+        onLogin={(authedProfile) => {
+          updateLearner(authedProfile);
+        }}
+        onBackToFounderNote={() => {
+          setReviewingFounderNote(true);
+        }}
+        onReset={() => {
+          if (window.confirm('Reset all saved learner credentials and progress?')) {
+            const fresh = fullSystemReset();
+            setLearner(fresh);
+          }
+        }}
+      />
+    );
+  }
+
+  // 3. Authenticated State: Full Forward Deployment Workshop
   const selectedDay =
     CURRICULUM_DATA.find((d) => d.id === selectedDayId) || CURRICULUM_DATA[0];
 
@@ -83,6 +158,9 @@ export default function App() {
         onSelectTab={(tab) => setCurrentTab(tab)}
         learner={learner}
         onOpenProfile={() => setShowProfileModal(true)}
+        onSignOff={handleSignOff}
+        onResetProgress={handleResetProgress}
+        onViewFounderNote={() => setReviewingFounderNote(true)}
       />
 
       {/* Main Content Area */}
@@ -125,7 +203,7 @@ export default function App() {
         {currentTab === 'mentor' && <MentorKapilView />}
       </main>
 
-      {/* Learner Onboarding / Profile Customization Modal */}
+      {/* Learner Profile Customization Modal */}
       <OnboardingModal
         isOpen={showProfileModal}
         onClose={() => setShowProfileModal(false)}
@@ -133,12 +211,8 @@ export default function App() {
         onSaveProfile={(updated) => {
           updateLearner(updated);
           setShowProfileModal(false);
-          // If first time, switch directly to IDE to begin immediately
-          if (!learner.name) {
-            setCurrentTab('ide');
-          }
         }}
-        isFirstTime={!learner.name}
+        isFirstTime={false}
       />
     </div>
   );

@@ -12,6 +12,7 @@ import {
   Play,
   FileCode2,
 } from 'lucide-react';
+import heroBanner from '../assets/images/fde_command_center_hero_1792041458720.jpg';
 
 interface CurriculumOverviewProps {
   curriculum: DayCurriculum[];
@@ -50,10 +51,9 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
       <div className="relative rounded-2xl overflow-hidden border border-[#D5C4AC] bg-[#231710] shadow-xl">
         <div className="relative h-64 sm:h-76 w-full overflow-hidden">
           <img
-            src="/src/assets/images/fde_command_center_hero_1792041458720.jpg"
+            src={heroBanner}
             alt="Forward Deployment Command Center"
             className="w-full h-full object-cover object-center opacity-45 scale-105"
-            referrerPolicy="no-referrer"
           />
           {/* Measured Scrim for WCAG AA readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#1A110B] via-[#1A110B]/85 to-transparent" />
