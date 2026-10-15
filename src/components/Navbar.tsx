@@ -25,21 +25,21 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800 bg-slate-950/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-[#E3D8C6] bg-[#F5EFEB]/95 backdrop-blur-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-8 px-6 py-3.5">
         {/* Zone 1: Single text element wordmark */}
         <button
           onClick={() => onSelectTab('curriculum')}
           className="flex items-center gap-2.5 text-left group focus:outline-none"
         >
-          <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:border-emerald-400 transition-colors">
+          <div className="w-8 h-8 rounded-lg bg-[#EFE5D6] border border-[#D5C4AC] flex items-center justify-center text-[#7C3E1D] group-hover:border-[#7C3E1D] transition-colors">
             <Terminal className="w-4 h-4" />
           </div>
           <div className="whitespace-nowrap shrink-0">
-            <span className="text-base font-bold tracking-tight text-white block leading-none">
+            <span className="text-base font-bold tracking-tight text-[#24150D] block leading-none">
               Forward Deployed Academy
             </span>
-            <span className="text-xs text-slate-400 tracking-wide mt-1 block font-mono">
+            <span className="text-xs text-[#7A6250] tracking-wide mt-1 block font-mono">
               Powered by Kapil Narula
             </span>
           </div>
@@ -55,8 +55,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => onSelectTab(item.id)}
                 className={`flex items-center gap-1.5 whitespace-nowrap shrink-0 transition-colors py-1 ${
                   isActive
-                    ? 'text-emerald-400 border-b-2 border-emerald-400 font-semibold'
-                    : 'text-slate-400 hover:text-slate-100'
+                    ? 'text-[#7C3E1D] border-b-2 border-[#7C3E1D] font-bold'
+                    : 'text-[#6A5342] hover:text-[#24150D]'
                 }`}
               >
                 <span>{item.label}</span>
@@ -69,18 +69,18 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center gap-3 shrink-0">
           <button
             onClick={onOpenProfile}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-slate-200 bg-slate-900 border border-slate-700/80 rounded-lg hover:border-slate-500 hover:text-white transition-all whitespace-nowrap shrink-0"
+            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#3D291C] bg-[#FAF7F2] border border-[#D5C4AC] rounded-lg hover:border-[#7C3E1D] hover:bg-white shadow-xs transition-all whitespace-nowrap shrink-0"
           >
-            <User className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="truncate max-w-[120px] font-semibold">
+            <User className="w-3.5 h-3.5 text-[#7C3E1D]" />
+            <span className="truncate max-w-[120px] font-semibold text-[#24150D]">
               {learner.name || 'New Learner'}
             </span>
-            <span className="text-slate-500">·</span>
-            <span className="text-emerald-400 font-mono font-bold">
+            <span className="text-[#B8A388]">·</span>
+            <span className="text-[#7C3E1D] font-mono font-bold">
               {learner.completedDays.length}/15 Days
             </span>
-            <span className="text-slate-500">·</span>
-            <span className="text-amber-400 font-mono font-medium">
+            <span className="text-[#B8A388]">·</span>
+            <span className="text-[#9A5B13] font-mono font-medium">
               {learner.xp} XP
             </span>
           </button>
@@ -88,15 +88,15 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Mobile nav subrow */}
-      <div className="lg:hidden flex items-center gap-4 px-6 py-2 overflow-x-auto border-t border-slate-900 bg-slate-950 text-xs">
+      <div className="lg:hidden flex items-center gap-4 px-6 py-2 overflow-x-auto border-t border-[#E3D8C6] bg-[#F5EFEB] text-xs">
         {navItems.map((item) => (
           <button
             key={item.id}
             onClick={() => onSelectTab(item.id)}
             className={`whitespace-nowrap shrink-0 py-1 ${
               currentTab === item.id
-                ? 'text-emerald-400 font-semibold border-b border-emerald-400'
-                : 'text-slate-400'
+                ? 'text-[#7C3E1D] font-bold border-b-2 border-[#7C3E1D]'
+                : 'text-[#6A5342]'
             }`}
           >
             {item.label}

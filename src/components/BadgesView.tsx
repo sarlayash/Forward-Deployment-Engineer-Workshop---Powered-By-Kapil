@@ -21,7 +21,7 @@ interface BadgesViewProps {
 
 export const BadgesView: React.FC<BadgesViewProps> = ({ learner, onOpenIDEForDay }) => {
   const getIcon = (iconName: string, isUnlocked: boolean) => {
-    const iconClass = `w-7 h-7 ${isUnlocked ? 'text-amber-400' : 'text-slate-600'}`;
+    const iconClass = `w-7 h-7 ${isUnlocked ? 'text-[#8C4A23]' : 'text-[#8C7360]'}`;
     switch (iconName) {
       case 'DatabaseZap':
         return <DatabaseZap className={iconClass} />;
@@ -47,17 +47,17 @@ export const BadgesView: React.FC<BadgesViewProps> = ({ learner, onOpenIDEForDay
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-6 py-8 space-y-8">
+    <div className="w-full max-w-6xl mx-auto px-6 py-8 space-y-8 bg-[#FBF8F3] text-[#24150D]">
       {/* Header */}
       <div className="space-y-2">
-        <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
+        <div className="flex items-center gap-2 text-xs font-mono text-[#7C3E1D] font-bold">
           <Award className="w-4 h-4" />
           <span>FDE COMPETENCY MILESTONES</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#24150D] tracking-tight">
           Earnable Forward Deployment Badges
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 max-w-2xl leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#5C4535] max-w-2xl leading-relaxed">
           Badges represent verified production milestones across data pipelines, graph ontologies, applied AI, zero-trust security, and high-availability architecture.
         </p>
       </div>
@@ -78,8 +78,8 @@ export const BadgesView: React.FC<BadgesViewProps> = ({ learner, onOpenIDEForDay
               key={badge.id}
               className={`rounded-xl border p-6 flex flex-col justify-between transition-all duration-300 relative overflow-hidden ${
                 isUnlocked
-                  ? 'bg-gradient-to-b from-slate-900 to-slate-950 border-amber-500/40 shadow-xl shadow-amber-500/5'
-                  : 'bg-slate-950/60 border-slate-800/80 opacity-80'
+                  ? 'bg-[#FFFFFF] border-[#B87A38] shadow-md ring-1 ring-[#B87A38]/30'
+                  : 'bg-[#FAF7F2] border-[#E3D8C6] opacity-85 shadow-xs'
               }`}
             >
               {/* Top Row: Icon + Status */}
@@ -88,19 +88,19 @@ export const BadgesView: React.FC<BadgesViewProps> = ({ learner, onOpenIDEForDay
                   <div
                     className={`w-14 h-14 rounded-xl flex items-center justify-center border transition-all ${
                       isUnlocked
-                        ? 'bg-amber-950/30 border-amber-500/50 shadow-md shadow-amber-500/10'
-                        : 'bg-slate-900 border-slate-800'
+                        ? 'bg-[#FDF4E9] border-[#D5A872] shadow-sm'
+                        : 'bg-[#EFE7DA] border-[#D5C4AC]'
                     }`}
                   >
                     {getIcon(badge.iconName, isUnlocked)}
                   </div>
                   {isUnlocked ? (
-                    <span className="flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-950/60 border border-amber-500/40 px-2.5 py-1 rounded-full">
+                    <span className="flex items-center gap-1 text-[11px] font-bold text-[#7C3E1D] bg-[#FBEFE0] border border-[#D5A872] px-2.5 py-1 rounded-full">
                       <Sparkles className="w-3 h-3" />
                       UNLOCKED
                     </span>
                   ) : (
-                    <span className="flex items-center gap-1 text-[11px] font-mono text-slate-500 bg-slate-900 border border-slate-800 px-2 py-0.5 rounded">
+                    <span className="flex items-center gap-1 text-[11px] font-mono text-[#8C7360] bg-[#EFE7DA] border border-[#D5C4AC] px-2 py-0.5 rounded">
                       <Lock className="w-3 h-3" />
                       {completedMilestoneCount}/{badge.milestoneDays.length} Days
                     </span>
@@ -108,20 +108,20 @@ export const BadgesView: React.FC<BadgesViewProps> = ({ learner, onOpenIDEForDay
                 </div>
 
                 {/* Badge Info */}
-                <h3 className="text-base font-bold text-white tracking-tight">
+                <h3 className="text-base font-bold text-[#24150D] tracking-tight">
                   {badge.title}
                 </h3>
-                <span className="text-xs font-mono text-emerald-400 block mt-0.5">
+                <span className="text-xs font-mono text-[#7C3E1D] font-bold block mt-0.5">
                   {badge.subtitle}
                 </span>
 
-                <p className="text-xs text-slate-400 mt-2.5 leading-relaxed">
+                <p className="text-xs text-[#5C4535] mt-2.5 leading-relaxed">
                   {badge.description}
                 </p>
 
                 {/* Milestone requirements */}
-                <div className="mt-4 pt-3 border-t border-slate-800/80 text-[11px]">
-                  <span className="text-slate-500 block mb-1.5 font-mono">
+                <div className="mt-4 pt-3 border-t border-[#EFE5D6] text-[11px]">
+                  <span className="text-[#8C7360] block mb-1.5 font-mono">
                     Required Days:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -133,8 +133,8 @@ export const BadgesView: React.FC<BadgesViewProps> = ({ learner, onOpenIDEForDay
                           onClick={() => onOpenIDEForDay(d)}
                           className={`px-2 py-0.5 rounded text-[10px] font-mono transition-colors ${
                             done
-                              ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/30'
-                              : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                              ? 'bg-[#EAF2E8] text-[#2E5A27] font-semibold border border-[#C5DEC0]'
+                              : 'bg-[#EFE7DA] text-[#6E5644] hover:text-[#24150D] border border-[#D5C4AC]'
                           }`}
                         >
                           Day {d} {done ? '✓' : ''}
@@ -146,24 +146,24 @@ export const BadgesView: React.FC<BadgesViewProps> = ({ learner, onOpenIDEForDay
               </div>
 
               {/* Footer Progress & Action */}
-              <div className="mt-6 pt-3 border-t border-slate-800/60">
+              <div className="mt-6 pt-3 border-t border-[#EFE5D6]">
                 {isUnlocked ? (
                   <button
                     onClick={() => handleShareBadge(badge.title)}
-                    className="w-full flex items-center justify-center gap-2 py-2 text-xs font-semibold text-amber-300 bg-amber-950/40 hover:bg-amber-950/70 border border-amber-500/40 rounded-lg transition-colors"
+                    className="w-full flex items-center justify-center gap-2 py-2 text-xs font-semibold text-[#FAF6EE] bg-[#7C3E1D] hover:bg-[#663216] rounded-lg transition-colors shadow-xs"
                   >
                     <Share2 className="w-3.5 h-3.5" />
                     <span>Share Credential</span>
                   </button>
                 ) : (
                   <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-[#6E5644]">
                       <span>Progress</span>
                       <span>{progressPercent}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-slate-900 rounded-full overflow-hidden">
+                    <div className="h-1.5 w-full bg-[#EAE0D2] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-emerald-400 rounded-full"
+                        className="h-full bg-[#7C3E1D] rounded-full"
                         style={{ width: `${progressPercent}%` }}
                       />
                     </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { DayCurriculum, LearnerProfile, TestCase } from '../types/workshop';
+import { DayCurriculum, LearnerProfile } from '../types/workshop';
 import {
   Play,
   RotateCcw,
@@ -34,18 +34,13 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
   onSelectDay,
   onCompleteDay,
 }) => {
-  // Current code editor content
   const [code, setCode] = useState<string>(
     learner.codeDrafts[day.id] || day.starterCode
   );
 
-  // Tabs for left panel: 'theory' | 'handsOn' | 'solution'
   const [leftTab, setLeftTab] = useState<'theory' | 'handsOn' | 'solution'>('handsOn');
-
-  // Tabs for bottom console: 'tests' | 'topology' | 'logs'
   const [consoleTab, setConsoleTab] = useState<'tests' | 'topology' | 'logs'>('tests');
 
-  // Test execution state
   const [isRunningTests, setIsRunningTests] = useState(false);
   const [testResults, setTestResults] = useState<
     Array<{ testId: string; name: string; passed: boolean; message: string; durationMs: number }>
@@ -56,7 +51,6 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
 
   const editorRef = useRef<HTMLTextAreaElement>(null);
 
-  // Reset or load saved draft on day change
   useEffect(() => {
     setCode(learner.codeDrafts[day.id] || day.starterCode);
     setHasRun(false);
@@ -70,7 +64,6 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
     ]);
   }, [day.id]);
 
-  // Handle Tab key in code editor
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Tab') {
       e.preventDefault();
@@ -90,7 +83,6 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
     }
   };
 
-  // Run Test Suite simulation
   const runTestSuite = () => {
     setIsRunningTests(true);
     setConsoleTab('tests');
@@ -157,21 +149,21 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
   const allTestsPass = hasRun && testResults.length > 0 && testResults.every((t) => t.passed);
 
   return (
-    <div className="w-full flex flex-col h-[calc(100vh-65px)] bg-slate-950 text-slate-100 overflow-hidden">
+    <div className="w-full flex flex-col h-[calc(100vh-65px)] bg-[#FBF8F3] text-[#24150D] overflow-hidden">
       {/* Top Day Subheader & Selector Bar */}
-      <div className="flex items-center justify-between px-6 py-2.5 bg-slate-900 border-b border-slate-800 text-xs shrink-0">
+      <div className="flex items-center justify-between px-6 py-2.5 bg-[#F5EFEB] border-b border-[#E3D8C6] text-xs shrink-0">
         <div className="flex items-center gap-3">
-          <span className="font-mono text-emerald-400 font-bold tracking-wider">
+          <span className="font-mono text-[#7C3E1D] font-bold tracking-wider">
             DAY {day.id.toString().padStart(2, '0')}/15
           </span>
-          <span className="text-slate-600">|</span>
-          <span className="text-slate-400 hidden sm:inline">{day.category}</span>
-          <span className="text-slate-600 hidden sm:inline">|</span>
-          <h1 className="text-sm font-semibold text-white truncate max-w-md">
+          <span className="text-[#C4B29A]">|</span>
+          <span className="text-[#6E5644] hidden sm:inline">{day.category}</span>
+          <span className="text-[#C4B29A]">|</span>
+          <h1 className="text-sm font-bold text-[#24150D] truncate max-w-md">
             {day.title}
           </h1>
           {isCompleted && (
-            <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">
+            <span className="flex items-center gap-1 text-[11px] font-semibold text-[#2E5A27] bg-[#EAF2E8] border border-[#C5DEC0] px-2 py-0.5 rounded">
               <Check className="w-3 h-3" />
               Completed
             </span>
@@ -183,18 +175,18 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
           <button
             disabled={day.id <= 1}
             onClick={() => onSelectDay(day.id - 1)}
-            className="p-1 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
+            className="p-1 rounded bg-[#FAF7F2] border border-[#D5C4AC] text-[#5C4535] hover:text-[#24150D] disabled:opacity-30 disabled:pointer-events-none transition-colors"
             title="Previous Day"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <span className="text-slate-400 font-mono">
+          <span className="text-[#6E5644] font-mono">
             {day.id} of {allDays.length}
           </span>
           <button
             disabled={day.id >= allDays.length}
             onClick={() => onSelectDay(day.id + 1)}
-            className="p-1 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
+            className="p-1 rounded bg-[#FAF7F2] border border-[#D5C4AC] text-[#5C4535] hover:text-[#24150D] disabled:opacity-30 disabled:pointer-events-none transition-colors"
             title="Next Day"
           >
             <ChevronRight className="w-4 h-4" />
@@ -204,16 +196,16 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
 
       {/* Main Split Grid (42% Left Briefing & Theory, 58% Right IDE & Console) */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
-        {/* LEFT COLUMN: 10% Theory + 90% Hands-On Spec */}
-        <div className="lg:col-span-5 border-r border-slate-800 flex flex-col bg-slate-900/40 overflow-hidden">
+        {/* LEFT COLUMN: 10% Theory + 90% Hands-On Spec in Warm Cream */}
+        <div className="lg:col-span-5 border-r border-[#E3D8C6] flex flex-col bg-[#FAF7F2] overflow-hidden">
           {/* Left Tabs */}
-          <div className="flex items-center border-b border-slate-800 bg-slate-900/80 px-4 text-xs font-medium shrink-0">
+          <div className="flex items-center border-b border-[#E3D8C6] bg-[#F5EFEB] px-4 text-xs font-medium shrink-0">
             <button
               onClick={() => setLeftTab('handsOn')}
               className={`py-3 px-3.5 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${
                 leftTab === 'handsOn'
-                  ? 'border-emerald-400 text-emerald-400 bg-slate-800/40'
-                  : 'border-transparent text-slate-400 hover:text-slate-200'
+                  ? 'border-[#7C3E1D] text-[#7C3E1D] bg-[#F2EAE0]'
+                  : 'border-transparent text-[#6E5644] hover:text-[#24150D]'
               }`}
             >
               <Code2 className="w-3.5 h-3.5" />
@@ -223,8 +215,8 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
               onClick={() => setLeftTab('theory')}
               className={`py-3 px-3.5 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${
                 leftTab === 'theory'
-                  ? 'border-emerald-400 text-emerald-400 bg-slate-800/40'
-                  : 'border-transparent text-slate-400 hover:text-slate-200'
+                  ? 'border-[#7C3E1D] text-[#7C3E1D] bg-[#F2EAE0]'
+                  : 'border-transparent text-[#6E5644] hover:text-[#24150D]'
               }`}
             >
               <FileText className="w-3.5 h-3.5" />
@@ -234,8 +226,8 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
               onClick={() => setLeftTab('solution')}
               className={`py-3 px-3.5 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${
                 leftTab === 'solution'
-                  ? 'border-emerald-400 text-emerald-400 bg-slate-800/40'
-                  : 'border-transparent text-slate-400 hover:text-slate-200'
+                  ? 'border-[#7C3E1D] text-[#7C3E1D] bg-[#F2EAE0]'
+                  : 'border-transparent text-[#6E5644] hover:text-[#24150D]'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -248,49 +240,49 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
             {leftTab === 'handsOn' && (
               <>
                 {/* Client Stakes Box */}
-                <div className="p-4 bg-slate-950/80 border border-slate-800 rounded-lg space-y-2">
+                <div className="p-4 bg-[#FFFFFF] border border-[#D5C4AC] rounded-lg shadow-xs space-y-2">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-amber-400 uppercase tracking-wider">
+                    <span className="font-semibold text-[#8C4A23] uppercase tracking-wider">
                       Client Engagement Scenario
                     </span>
-                    <span className="text-slate-400 font-mono text-[11px]">
+                    <span className="text-[#8C7360] font-mono text-[11px]">
                       {day.clientContext.industry}
                     </span>
                   </div>
-                  <h3 className="text-base font-bold text-white">
+                  <h3 className="text-base font-bold text-[#24150D]">
                     {day.clientContext.clientName}
                   </h3>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    <strong className="text-slate-200">Stakes:</strong> {day.clientContext.stakes}
+                  <p className="text-xs text-[#4A3528] leading-relaxed">
+                    <strong className="text-[#24150D]">Stakes:</strong> {day.clientContext.stakes}
                   </p>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    <strong className="text-slate-300">Problem:</strong> {day.clientContext.problemSummary}
+                  <p className="text-xs text-[#5C4535] leading-relaxed">
+                    <strong className="text-[#3D291C]">Problem:</strong> {day.clientContext.problemSummary}
                   </p>
                 </div>
 
                 {/* Mission Objectives */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                    <TerminalIcon className="w-3.5 h-3.5 text-emerald-400" />
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#3D291C] flex items-center gap-1.5">
+                    <TerminalIcon className="w-3.5 h-3.5 text-[#7C3E1D]" />
                     Mission Briefing
                   </h4>
-                  <p className="text-xs text-slate-300 leading-relaxed bg-slate-900/70 p-3 rounded-lg border border-slate-800/80">
+                  <p className="text-xs text-[#4A3528] leading-relaxed bg-[#FFFFFF] p-3 rounded-lg border border-[#E3D8C6]">
                     {day.handsOn90.missionBrief}
                   </p>
                 </div>
 
                 {/* Tasks List */}
                 <div className="space-y-2.5">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#3D291C]">
                     Engineering Objectives
                   </h4>
                   <div className="space-y-2">
                     {day.handsOn90.taskObjectives.map((task, idx) => (
                       <div
                         key={idx}
-                        className="flex items-start gap-2.5 p-2.5 bg-slate-950/40 rounded-lg border border-slate-800/60 text-xs text-slate-300"
+                        className="flex items-start gap-2.5 p-2.5 bg-[#FFFFFF] rounded-lg border border-[#E3D8C6] text-xs text-[#4A3528]"
                       >
-                        <span className="w-5 h-5 rounded bg-slate-800 text-slate-300 font-mono font-bold text-[10px] flex items-center justify-center shrink-0">
+                        <span className="w-5 h-5 rounded bg-[#F2EAE0] text-[#7C3E1D] font-mono font-bold text-[10px] flex items-center justify-center shrink-0">
                           {idx + 1}
                         </span>
                         <span className="leading-relaxed">{task}</span>
@@ -301,13 +293,13 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
 
                 {/* Acceptance Criteria */}
                 <div className="space-y-2">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#3D291C]">
                     Acceptance Criteria
                   </h4>
-                  <ul className="space-y-1.5 text-xs text-slate-400">
+                  <ul className="space-y-1.5 text-xs text-[#5C4535]">
                     {day.handsOn90.acceptanceCriteria.map((item, idx) => (
                       <li key={idx} className="flex items-center gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#2E5A27] shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -315,12 +307,12 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
                 </div>
 
                 {/* Kapil's Field Notes */}
-                <div className="p-3.5 bg-emerald-950/20 border border-emerald-500/30 rounded-lg space-y-1.5">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
+                <div className="p-3.5 bg-[#F5EAE0] border border-[#D5B89C] rounded-lg space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#7C3E1D]">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>Kapil's Field Notes (Enterprise Wisdom)</span>
                   </div>
-                  <p className="text-xs text-emerald-200/90 leading-relaxed italic">
+                  <p className="text-xs text-[#422B1E] leading-relaxed italic">
                     "{day.kapilFieldNotes}"
                   </p>
                 </div>
@@ -332,32 +324,32 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
                 {/* 10% High Leverage Theory */}
                 <div className="space-y-4">
                   <div>
-                    <span className="text-[11px] font-mono text-emerald-400 uppercase tracking-widest block mb-1">
+                    <span className="text-[11px] font-mono text-[#7C3E1D] uppercase tracking-widest block mb-1">
                       10% Core Foundation
                     </span>
-                    <h3 className="text-lg font-bold text-white tracking-tight">
+                    <h3 className="text-lg font-bold text-[#24150D] tracking-tight">
                       {day.theory10.conceptTitle}
                     </h3>
                   </div>
 
-                  <div className="p-4 bg-slate-950/70 border border-slate-800 rounded-lg">
-                    <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                  <div className="p-4 bg-[#FFFFFF] border border-[#E3D8C6] rounded-lg">
+                    <h4 className="text-xs font-bold text-[#3D291C] uppercase tracking-wider mb-2">
                       Underlying Mechanism
                     </h4>
-                    <p className="text-xs text-slate-300 leading-relaxed">
+                    <p className="text-xs text-[#4A3528] leading-relaxed">
                       {day.theory10.coreMechanism}
                     </p>
                   </div>
 
                   <div className="space-y-2">
-                    <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                    <h4 className="text-xs font-bold text-[#3D291C] uppercase tracking-wider">
                       Architectural Trade-offs
                     </h4>
                     <div className="space-y-2">
                       {day.theory10.architecturalTradeoffs.map((item, idx) => (
                         <div
                           key={idx}
-                          className="p-2.5 bg-slate-950/40 border border-slate-800 rounded-md text-xs text-slate-300 leading-relaxed"
+                          className="p-2.5 bg-[#FFFFFF] border border-[#E3D8C6] rounded-md text-xs text-[#4A3528] leading-relaxed"
                         >
                           {item}
                         </div>
@@ -366,14 +358,14 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
                   </div>
 
                   <div className="space-y-2">
-                    <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider">
+                    <h4 className="text-xs font-bold text-[#8C4A23] uppercase tracking-wider">
                       Enterprise Anti-Patterns to Avoid
                     </h4>
                     <div className="space-y-2">
                       {day.theory10.enterprisePitfalls.map((item, idx) => (
                         <div
                           key={idx}
-                          className="p-2.5 bg-amber-950/20 border border-amber-500/20 rounded-md text-xs text-amber-200/90 leading-relaxed"
+                          className="p-2.5 bg-[#FBF0E1] border border-[#E3CAA8] rounded-md text-xs text-[#6B3A1A] leading-relaxed"
                         >
                           {item}
                         </div>
@@ -382,11 +374,11 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
                   </div>
 
                   {/* Kapil's Rule */}
-                  <div className="p-4 bg-gradient-to-r from-emerald-950/40 to-slate-900 border border-emerald-500/40 rounded-lg">
-                    <span className="text-[11px] font-mono font-bold text-emerald-400 uppercase tracking-wider block mb-1">
+                  <div className="p-4 bg-gradient-to-r from-[#FAF2E8] to-[#F5E8D8] border border-[#D5B89C] rounded-lg">
+                    <span className="text-[11px] font-mono font-bold text-[#7C3E1D] uppercase tracking-wider block mb-1">
                       Kapil's Inviolable Rule:
                     </span>
-                    <p className="text-xs text-white font-medium leading-relaxed">
+                    <p className="text-xs text-[#24150D] font-medium leading-relaxed">
                       "{day.theory10.kapilRule}"
                     </p>
                   </div>
@@ -397,20 +389,20 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
             {leftTab === 'solution' && (
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                  <h4 className="text-xs font-bold text-[#3D291C] uppercase tracking-wider">
                     Staff FDE Reference Solution
                   </h4>
                   <button
                     onClick={handleLoadSolution}
-                    className="text-xs px-2.5 py-1 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 rounded border border-emerald-500/40 transition-colors"
+                    className="text-xs px-2.5 py-1 bg-[#7C3E1D] text-[#FAF6EE] hover:bg-[#663216] rounded transition-colors"
                   >
                     Load into Editor
                   </button>
                 </div>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-[#6E5644]">
                   Inspect how a senior forward deployment engineer handles edge cases, error quarantine, and typed bounds.
                 </p>
-                <pre className="p-3 bg-slate-950 rounded-lg border border-slate-800 text-xs font-mono text-emerald-300/90 overflow-x-auto whitespace-pre leading-relaxed">
+                <pre className="p-3 bg-[#1C140E] text-[#F3EDE2] rounded-lg border border-[#3D291C] text-xs font-mono overflow-x-auto whitespace-pre leading-relaxed">
                   {day.solutionCode}
                 </pre>
               </div>
@@ -418,17 +410,17 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Interactive Code Editor & Multi-Tab Execution Deck */}
-        <div className="lg:col-span-7 flex flex-col bg-slate-950 overflow-hidden">
+        {/* RIGHT COLUMN: Espresso Brown Code Editor & Console */}
+        <div className="lg:col-span-7 flex flex-col bg-[#1A120B] overflow-hidden">
           {/* Editor Header Toolbar */}
-          <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b border-slate-800 text-xs shrink-0">
+          <div className="flex items-center justify-between px-4 py-2 bg-[#261C14] border-b border-[#3D2C20] text-xs shrink-0">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-slate-300 font-semibold flex items-center gap-1.5">
-                <Code2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="font-mono text-[#FAF6EE] font-semibold flex items-center gap-1.5">
+                <Code2 className="w-3.5 h-3.5 text-[#E4C5A0]" />
                 {day.fileName}
               </span>
-              <span className="text-slate-600">·</span>
-              <span className="text-slate-500 text-[11px] font-mono">
+              <span className="text-[#6E5644]">·</span>
+              <span className="text-[#A89480] text-[11px] font-mono">
                 {lineCount} lines
               </span>
             </div>
@@ -436,7 +428,7 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
             <div className="flex items-center gap-2">
               <button
                 onClick={handleResetStarter}
-                className="flex items-center gap-1 px-2.5 py-1 text-slate-400 hover:text-white rounded border border-slate-700/60 hover:border-slate-500 transition-colors"
+                className="flex items-center gap-1 px-2.5 py-1 text-[#C4B29A] hover:text-[#FAF6EE] rounded border border-[#4D382B] hover:border-[#7C5A44] transition-colors"
                 title="Reset to starter code"
               >
                 <RotateCcw className="w-3 h-3" />
@@ -446,10 +438,10 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
               <button
                 onClick={runTestSuite}
                 disabled={isRunningTests}
-                className={`flex items-center gap-1.5 px-4 py-1.5 font-semibold text-slate-950 rounded-md transition-all shadow-md ${
+                className={`flex items-center gap-1.5 px-4 py-1.5 font-bold rounded-md transition-all shadow-md ${
                   isRunningTests
-                    ? 'bg-emerald-600 opacity-60 cursor-not-allowed'
-                    : 'bg-emerald-400 hover:bg-emerald-300 shadow-emerald-500/20'
+                    ? 'bg-[#8F663C] opacity-60 cursor-not-allowed text-[#FAF6EE]'
+                    : 'bg-[#D49E6A] hover:bg-[#BF8955] text-[#1A120B]'
                 }`}
               >
                 <Play className="w-3.5 h-3.5 fill-current" />
@@ -460,9 +452,9 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
           </div>
 
           {/* Interactive Code Editor Box */}
-          <div className="flex-1 relative flex overflow-hidden bg-slate-950">
+          <div className="flex-1 relative flex overflow-hidden bg-[#18100A]">
             {/* Line numbers gutter */}
-            <div className="w-12 py-3 bg-slate-950/90 text-right pr-3 select-none text-[11px] font-mono text-slate-600 border-r border-slate-900 overflow-hidden">
+            <div className="w-12 py-3 bg-[#140D08] text-right pr-3 select-none text-[11px] font-mono text-[#6E5644] border-r border-[#261C14] overflow-hidden">
               {Array.from({ length: Math.max(lineCount, 18) }).map((_, i) => (
                 <div key={i} className="leading-6">
                   {i + 1}
@@ -477,25 +469,25 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
               onChange={(e) => setCode(e.target.value)}
               onKeyDown={handleKeyDown}
               spellCheck={false}
-              className="flex-1 p-3 bg-transparent font-mono text-xs text-slate-200 resize-none focus:outline-none leading-6 selection:bg-emerald-900/60 selection:text-white overflow-auto whitespace-pre"
+              className="flex-1 p-3 bg-transparent font-mono text-xs text-[#FAF6EE] resize-none focus:outline-none leading-6 selection:bg-[#7C3E1D] selection:text-[#FAF6EE] overflow-auto whitespace-pre"
               placeholder="// Write your enterprise forward deployment solution here..."
             />
           </div>
 
           {/* Celebration Banner when all tests pass */}
           {showCelebration && (
-            <div className="px-4 py-2.5 bg-gradient-to-r from-emerald-950 via-slate-900 to-emerald-950 border-t border-b border-emerald-500/40 flex items-center justify-between text-xs animate-in slide-in-from-top-2 duration-200">
-              <div className="flex items-center gap-2 text-emerald-300">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <div className="px-4 py-2.5 bg-gradient-to-r from-[#2C1F15] via-[#38261A] to-[#2C1F15] border-t border-b border-[#D49E6A]/50 flex items-center justify-between text-xs animate-in slide-in-from-top-2 duration-200">
+              <div className="flex items-center gap-2 text-[#E4C5A0]">
+                <CheckCircle2 className="w-4 h-4 text-[#D49E6A]" />
                 <span className="font-semibold">
                   Day {day.id} Complete! +{day.xpReward} XP Earned.
                 </span>
-                <span className="text-slate-400">Promoted to client staging.</span>
+                <span className="text-[#C4B29A]">Promoted to client staging.</span>
               </div>
               {day.id < allDays.length && (
                 <button
                   onClick={() => onSelectDay(day.id + 1)}
-                  className="flex items-center gap-1.5 px-3 py-1 bg-emerald-400 text-slate-950 font-bold rounded hover:bg-emerald-300 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1 bg-[#D49E6A] text-[#1A120B] font-bold rounded hover:bg-[#BF8955] transition-colors"
                 >
                   <span>Proceed to Day {day.id + 1}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -505,21 +497,21 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
           )}
 
           {/* Console / Output Tabs */}
-          <div className="h-56 border-t border-slate-800 flex flex-col bg-slate-900/80 shrink-0">
-            <div className="flex items-center justify-between px-4 border-b border-slate-800 bg-slate-950/60 text-xs shrink-0">
+          <div className="h-56 border-t border-[#3D2C20] flex flex-col bg-[#201710] shrink-0">
+            <div className="flex items-center justify-between px-4 border-b border-[#3D2C20] bg-[#1A120B] text-xs shrink-0">
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setConsoleTab('tests')}
                   className={`py-2 border-b-2 font-medium flex items-center gap-1.5 transition-colors ${
                     consoleTab === 'tests'
-                      ? 'border-emerald-400 text-emerald-400 font-semibold'
-                      : 'border-transparent text-slate-400 hover:text-slate-200'
+                      ? 'border-[#D49E6A] text-[#E4C5A0] font-bold'
+                      : 'border-transparent text-[#8F7A66] hover:text-[#FAF6EE]'
                   }`}
                 >
                   <Activity className="w-3.5 h-3.5" />
                   <span>Test Results</span>
                   {hasRun && (
-                    <span className="ml-1 px-1.5 py-0.2 rounded text-[10px] font-mono bg-slate-800 text-slate-300">
+                    <span className="ml-1 px-1.5 py-0.2 rounded text-[10px] font-mono bg-[#38261B] text-[#E4C5A0]">
                       {testResults.filter((t) => t.passed).length}/{testResults.length}
                     </span>
                   )}
@@ -528,8 +520,8 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
                   onClick={() => setConsoleTab('topology')}
                   className={`py-2 border-b-2 font-medium flex items-center gap-1.5 transition-colors ${
                     consoleTab === 'topology'
-                      ? 'border-emerald-400 text-emerald-400 font-semibold'
-                      : 'border-transparent text-slate-400 hover:text-slate-200'
+                      ? 'border-[#D49E6A] text-[#E4C5A0] font-bold'
+                      : 'border-transparent text-[#8F7A66] hover:text-[#FAF6EE]'
                   }`}
                 >
                   <Layers className="w-3.5 h-3.5" />
@@ -539,8 +531,8 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
                   onClick={() => setConsoleTab('logs')}
                   className={`py-2 border-b-2 font-medium flex items-center gap-1.5 transition-colors ${
                     consoleTab === 'logs'
-                      ? 'border-emerald-400 text-emerald-400 font-semibold'
-                      : 'border-transparent text-slate-400 hover:text-slate-200'
+                      ? 'border-[#D49E6A] text-[#E4C5A0] font-bold'
+                      : 'border-transparent text-[#8F7A66] hover:text-[#FAF6EE]'
                   }`}
                 >
                   <TerminalIcon className="w-3.5 h-3.5" />
@@ -548,7 +540,7 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
                 </button>
               </div>
 
-              <div className="text-[11px] font-mono text-slate-500">
+              <div className="text-[11px] font-mono text-[#8F7A66]">
                 SLA: 99.99% · Sandboxed Environment
               </div>
             </div>
@@ -558,10 +550,10 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
               {consoleTab === 'tests' && (
                 <div className="space-y-2">
                   {!hasRun ? (
-                    <div className="h-full flex flex-col items-center justify-center text-slate-500 py-6 space-y-1">
-                      <TerminalIcon className="w-6 h-6 text-slate-600 mb-1" />
+                    <div className="h-full flex flex-col items-center justify-center text-[#8F7A66] py-6 space-y-1">
+                      <TerminalIcon className="w-6 h-6 text-[#6E5644] mb-1" />
                       <p>No tests executed yet.</p>
-                      <p className="text-[11px] text-slate-600">
+                      <p className="text-[11px] text-[#6E5644]">
                         Click "Run Test Suite" to simulate enterprise verification tests against your code.
                       </p>
                     </div>
@@ -571,26 +563,26 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
                         key={result.testId}
                         className={`p-2.5 rounded border flex items-start justify-between gap-3 ${
                           result.passed
-                            ? 'bg-emerald-950/20 border-emerald-500/30 text-emerald-200'
-                            : 'bg-rose-950/20 border-rose-500/30 text-rose-200'
+                            ? 'bg-[#2A3B28]/40 border-[#4E7D48]/50 text-[#C7E6C2]'
+                            : 'bg-[#4A221C]/40 border-[#8A3F33]/50 text-[#F5C2BC]'
                         }`}
                       >
                         <div className="flex items-start gap-2">
                           {result.passed ? (
-                            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                            <CheckCircle2 className="w-4 h-4 text-[#68B35F] shrink-0 mt-0.5" />
                           ) : (
-                            <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                            <XCircle className="w-4 h-4 text-[#E66B59] shrink-0 mt-0.5" />
                           )}
                           <div>
-                            <div className="font-semibold text-white">
+                            <div className="font-semibold text-[#FAF6EE]">
                               {result.name}
                             </div>
-                            <div className="text-[11px] opacity-80 mt-0.5">
+                            <div className="text-[11px] opacity-85 mt-0.5">
                               {result.message}
                             </div>
                           </div>
                         </div>
-                        <div className="text-[10px] text-slate-400 shrink-0 font-mono">
+                        <div className="text-[10px] text-[#A89480] shrink-0 font-mono">
                           {result.durationMs}ms
                         </div>
                       </div>
@@ -600,60 +592,60 @@ export const IDEWorkspace: React.FC<IDEWorkspaceProps> = ({
               )}
 
               {consoleTab === 'topology' && (
-                <div className="h-full flex items-center justify-around py-3 px-2 bg-slate-950/60 rounded border border-slate-800">
+                <div className="h-full flex items-center justify-around py-3 px-2 bg-[#1A120B] rounded border border-[#3D2C20]">
                   <div className="text-center">
-                    <div className="w-12 h-12 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center mx-auto mb-1 text-slate-300">
+                    <div className="w-12 h-12 rounded-lg bg-[#2D1F16] border border-[#4D382B] flex items-center justify-center mx-auto mb-1 text-[#E4C5A0]">
                       <TerminalIcon className="w-5 h-5" />
                     </div>
-                    <span className="text-[10px] text-slate-400">Client Source</span>
+                    <span className="text-[10px] text-[#C4B29A]">Client Source</span>
                   </div>
 
-                  <div className="flex-1 max-w-[60px] h-[2px] bg-slate-700 relative">
-                    <div className={`h-full ${allTestsPass ? 'bg-emerald-400' : 'bg-slate-700'}`} />
+                  <div className="flex-1 max-w-[60px] h-[2px] bg-[#3D2C20] relative">
+                    <div className={`h-full ${allTestsPass ? 'bg-[#D49E6A]' : 'bg-[#3D2C20]'}`} />
                   </div>
 
                   <div className="text-center">
                     <div
                       className={`w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-1 transition-all ${
                         allTestsPass
-                          ? 'bg-emerald-950 border border-emerald-400 text-emerald-300 shadow-lg shadow-emerald-500/20'
-                          : 'bg-slate-800 border border-slate-700 text-slate-400'
+                          ? 'bg-[#3D281A] border border-[#D49E6A] text-[#FAF6EE] shadow-lg shadow-[#D49E6A]/20'
+                          : 'bg-[#2D1F16] border border-[#4D382B] text-[#8F7A66]'
                       }`}
                     >
                       <Code2 className="w-5 h-5" />
                     </div>
-                    <span className="text-[10px] text-slate-300 font-semibold">Your FDE Pipeline</span>
+                    <span className="text-[10px] text-[#FAF6EE] font-semibold">Your FDE Pipeline</span>
                   </div>
 
-                  <div className="flex-1 max-w-[60px] h-[2px] bg-slate-700 relative">
-                    <div className={`h-full ${allTestsPass ? 'bg-emerald-400' : 'bg-slate-700'}`} />
+                  <div className="flex-1 max-w-[60px] h-[2px] bg-[#3D2C20] relative">
+                    <div className={`h-full ${allTestsPass ? 'bg-[#D49E6A]' : 'bg-[#3D2C20]'}`} />
                   </div>
 
                   <div className="text-center">
                     <div
                       className={`w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-1 ${
                         allTestsPass
-                          ? 'bg-emerald-950 border border-emerald-400 text-emerald-300'
-                          : 'bg-slate-800 border border-slate-700 text-slate-400'
+                          ? 'bg-[#3D281A] border border-[#D49E6A] text-[#FAF6EE]'
+                          : 'bg-[#2D1F16] border border-[#4D382B] text-[#8F7A66]'
                       }`}
                     >
                       <Shield className="w-5 h-5" />
                     </div>
-                    <span className="text-[10px] text-slate-400">Ontology & SLA</span>
+                    <span className="text-[10px] text-[#C4B29A]">Ontology & SLA</span>
                   </div>
                 </div>
               )}
 
               {consoleTab === 'logs' && (
-                <div className="space-y-1 text-slate-300">
+                <div className="space-y-1 text-[#DDD0C0]">
                   {terminalLogs.map((log, i) => (
                     <div key={i} className="leading-5">
                       {log.startsWith('[FAIL]') ? (
-                        <span className="text-rose-400">{log}</span>
+                        <span className="text-[#E66B59]">{log}</span>
                       ) : log.startsWith('[PASS]') || log.startsWith('[SUCCESS]') ? (
-                        <span className="text-emerald-400">{log}</span>
+                        <span className="text-[#68B35F]">{log}</span>
                       ) : log.startsWith('[CLIENT]') ? (
-                        <span className="text-amber-400">{log}</span>
+                        <span className="text-[#D49E6A]">{log}</span>
                       ) : (
                         <span>{log}</span>
                       )}

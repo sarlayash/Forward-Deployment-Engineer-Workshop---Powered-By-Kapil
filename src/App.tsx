@@ -76,7 +76,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-900 selection:text-white">
+    <div className="min-h-screen bg-[#FBF8F3] text-[#24150D] flex flex-col font-sans selection:bg-[#7C3E1D] selection:text-[#FAF6EE]">
       {/* Top Bar adhering to Top Bar Contract */}
       <Navbar
         currentTab={currentTab}

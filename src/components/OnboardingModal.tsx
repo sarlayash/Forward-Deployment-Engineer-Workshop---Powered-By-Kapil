@@ -56,19 +56,19 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-      <div className="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        {/* Header Banner */}
-        <div className="relative px-6 py-6 border-b border-slate-800 bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-950/40">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1C140E]/60 backdrop-blur-sm">
+      <div className="w-full max-w-xl bg-[#FDFBF7] border border-[#D5C4AC] rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 text-[#24150D]">
+        {/* Header Banner in Warm Cream */}
+        <div className="relative px-6 py-6 border-b border-[#E3D8C6] bg-gradient-to-r from-[#FAF7F2] via-[#F5EFEB] to-[#FAF7F2]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <div className="w-10 h-10 rounded-lg bg-[#F5EAE0] border border-[#D5B89C] flex items-center justify-center text-[#7C3E1D]">
               <Terminal className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white tracking-tight">
+              <h2 className="text-xl font-bold text-[#24150D] tracking-tight">
                 {isFirstTime ? 'Begin Your Forward Deployment Journey' : 'Edit Learner Profile'}
               </h2>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-[#5C4535] mt-0.5">
                 15-Day Bootcamp · 10% High-Leverage Theory · 90% Hands-On Production Engineering
               </p>
             </div>
@@ -79,8 +79,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Name Field */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-              Your Full Name <span className="text-emerald-400">*</span>
+            <label className="block text-xs font-bold text-[#3D291C] uppercase tracking-wider mb-1.5">
+              Your Full Name <span className="text-[#7C3E1D]">*</span>
             </label>
             <input
               type="text"
@@ -88,16 +88,16 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               placeholder="e.g., Alex Vance"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-colors"
+              className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border border-[#D5C4AC] rounded-lg text-sm text-[#24150D] placeholder-[#A89480] focus:outline-none focus:border-[#7C3E1D] focus:ring-1 focus:ring-[#7C3E1D] transition-colors shadow-2xs"
             />
-            <p className="text-[11px] text-slate-400 mt-1">
+            <p className="text-[11px] text-[#8C7360] mt-1">
               This name will be embossed onto your official verifiable Certificate of Completion.
             </p>
           </div>
 
           {/* Target Role Track */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-[#3D291C] uppercase tracking-wider mb-1.5">
               Target Career Role
             </label>
             <div className="grid grid-cols-1 gap-2">
@@ -108,12 +108,12 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   onClick={() => setTargetRole(role)}
                   className={`flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium text-left transition-all border ${
                     targetRole === role
-                      ? 'bg-emerald-950/40 border-emerald-500/60 text-emerald-300'
-                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                      ? 'bg-[#FAF2E8] border-[#8C4A23] text-[#7C3E1D] font-bold shadow-2xs'
+                      : 'bg-[#FFFFFF] border-[#E3D8C6] text-[#5C4535] hover:text-[#24150D] hover:border-[#D5C4AC]'
                   }`}
                 >
                   <span>{role}</span>
-                  {targetRole === role && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
+                  {targetRole === role && <CheckCircle2 className="w-3.5 h-3.5 text-[#7C3E1D] shrink-0" />}
                 </button>
               ))}
             </div>
@@ -121,7 +121,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
           {/* Current Experience Level */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-[#3D291C] uppercase tracking-wider mb-1.5">
               Current Engineering Level
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -130,10 +130,10 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   type="button"
                   key={lvl}
                   onClick={() => setExperienceLevel(lvl)}
-                  className={`px-3 py-2 rounded-lg text-xs font-medium text-center transition-all border ${
+                  className={`px-3 py-2 rounded-lg text-xs font-semibold text-center transition-all border ${
                     experienceLevel === lvl
-                      ? 'bg-slate-800 border-emerald-400 text-white'
-                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                      ? 'bg-[#7C3E1D] border-[#7C3E1D] text-[#FAF6EE] shadow-xs'
+                      : 'bg-[#FFFFFF] border-[#E3D8C6] text-[#5C4535] hover:text-[#24150D]'
                   }`}
                 >
                   {lvl}
@@ -143,8 +143,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
           </div>
 
           {/* Value Props & Mentor Note */}
-          <div className="p-3.5 bg-slate-950/70 border border-slate-800/80 rounded-lg text-xs text-slate-400 space-y-1.5">
-            <div className="flex items-center gap-1.5 text-emerald-400 font-semibold">
+          <div className="p-3.5 bg-[#FAF7F2] border border-[#E3D8C6] rounded-lg text-xs text-[#5C4535] space-y-1.5">
+            <div className="flex items-center gap-1.5 text-[#7C3E1D] font-bold">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Mentored by Kapil Narula:</span>
             </div>
@@ -154,19 +154,19 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
           </div>
 
           {/* Action Footer */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E3D8C6]">
             {!isFirstTime && (
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-xs font-medium text-slate-400 hover:text-white transition-colors"
+                className="px-4 py-2 text-xs font-semibold text-[#6E5644] hover:text-[#24150D] transition-colors"
               >
                 Cancel
               </button>
             )}
             <button
               type="submit"
-              className="flex items-center gap-2 px-5 py-2.5 text-xs font-semibold text-slate-950 bg-emerald-400 hover:bg-emerald-300 rounded-lg shadow-lg shadow-emerald-500/20 transition-all"
+              className="flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-[#FAF6EE] bg-[#7C3E1D] hover:bg-[#663216] rounded-lg shadow-md transition-all"
             >
               <span>{isFirstTime ? 'Launch Day 1 in IDE' : 'Save Changes'}</span>
               <ChevronRight className="w-4 h-4" />

@@ -71,52 +71,52 @@ export const MentorKapilView: React.FC = () => {
   ];
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-6 py-8 space-y-10">
-      {/* Mentor Hero Card with Generated Portrait Asset */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+    <div className="w-full max-w-6xl mx-auto px-6 py-8 space-y-10 bg-[#FBF8F3] text-[#24150D]">
+      {/* Mentor Hero Card with Cream and Espresso Borders */}
+      <div className="bg-[#FFFFFF] border border-[#D5C4AC] rounded-2xl overflow-hidden shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-12 items-stretch">
           {/* Portrait Column */}
-          <div className="md:col-span-5 relative min-h-[320px] bg-slate-950">
+          <div className="md:col-span-5 relative min-h-[320px] bg-[#1C140E]">
             <img
               src="/src/assets/images/mentor_kapil_narula_1792041458811.jpg"
               alt="Kapil Narula - Forward Deployment Lead"
               className="w-full h-full object-cover object-top"
               referrerPolicy="no-referrer"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent md:hidden" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1C140E] via-transparent to-transparent md:hidden" />
           </div>
 
           {/* Bio & Intro Column */}
           <div className="md:col-span-7 p-6 sm:p-10 flex flex-col justify-center space-y-4">
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 mb-1">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#7C3E1D] font-bold mb-1">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>FOUNDING MENTOR & ENTERPRISE ARCHITECT</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#24150D] tracking-tight">
                 Kapil Narula
               </h1>
-              <p className="text-xs text-slate-400 font-mono mt-0.5">
+              <p className="text-xs text-[#5C4535] font-mono mt-0.5">
                 Forward Deployment Leader · Enterprise Solutions Architect · Systems Strategist
               </p>
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#4A3528] leading-relaxed">
               "I built this 15-day workshop because enterprise engineering cannot be learned from generic LeetCode tutorials. Real Forward Deployment happens on the frontlines: debugging 2:00 AM connection pool deadlocks, stitching together dirty healthcare records, and deploying air-gapped AI into classified defense enclaves."
             </p>
 
-            <div className="pt-3 border-t border-slate-800 grid grid-cols-3 gap-3 text-xs font-mono">
+            <div className="pt-3 border-t border-[#EFE5D6] grid grid-cols-3 gap-3 text-xs font-mono">
               <div>
-                <span className="text-slate-500 block text-[11px]">Philosophy</span>
-                <span className="text-emerald-400 font-bold">10% Theory / 90% Hands-On</span>
+                <span className="text-[#8C7360] block text-[11px]">Philosophy</span>
+                <span className="text-[#7C3E1D] font-bold">10% Theory / 90% Hands-On</span>
               </div>
               <div>
-                <span className="text-slate-500 block text-[11px]">Curriculum</span>
-                <span className="text-white font-bold">15 Production Modules</span>
+                <span className="text-[#8C7360] block text-[11px]">Curriculum</span>
+                <span className="text-[#24150D] font-bold">15 Production Modules</span>
               </div>
               <div>
-                <span className="text-slate-500 block text-[11px]">Output</span>
-                <span className="text-amber-400 font-bold">L5/L6 Ready FDE</span>
+                <span className="text-[#8C7360] block text-[11px]">Output</span>
+                <span className="text-[#8C4A23] font-bold">L5/L6 Ready FDE</span>
               </div>
             </div>
           </div>
@@ -126,11 +126,11 @@ export const MentorKapilView: React.FC = () => {
       {/* The 7 Inviolable Rules */}
       <div className="space-y-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
+          <div className="flex items-center gap-2 text-xs font-mono text-[#7C3E1D] font-bold">
             <Shield className="w-4 h-4" />
             <span>THE FDE CODE OF CONDUCT</span>
           </div>
-          <h2 className="text-xl font-bold text-white tracking-tight">
+          <h2 className="text-xl font-bold text-[#24150D] tracking-tight">
             Kapil's 7 Inviolable Rules of Forward Deployment
           </h2>
         </div>
@@ -139,15 +139,15 @@ export const MentorKapilView: React.FC = () => {
           {kapilRules.map((rule) => (
             <div
               key={rule.number}
-              className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-2 hover:border-slate-700 transition-colors"
+              className="p-5 bg-[#FFFFFF] border border-[#D5C4AC] rounded-xl space-y-2 hover:border-[#7C3E1D] hover:shadow-sm transition-all"
             >
-              <span className="text-xs font-mono font-bold text-emerald-400">
+              <span className="text-xs font-mono font-bold text-[#7C3E1D]">
                 RULE {rule.number}
               </span>
-              <h3 className="text-sm font-bold text-white leading-snug">
+              <h3 className="text-sm font-bold text-[#24150D] leading-snug">
                 {rule.title}
               </h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-[#5C4535] leading-relaxed">
                 {rule.description}
               </p>
             </div>
@@ -156,16 +156,16 @@ export const MentorKapilView: React.FC = () => {
       </div>
 
       {/* Field Questions & Strategic Advice */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+      <div className="bg-[#FFFFFF] border border-[#D5C4AC] rounded-2xl p-6 sm:p-8 space-y-6 shadow-xs">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 mb-1">
+          <div className="flex items-center gap-2 text-xs font-mono text-[#7C3E1D] font-bold mb-1">
             <HelpCircle className="w-4 h-4" />
             <span>DIRECT FIELD INTELLIGENCE</span>
           </div>
-          <h2 className="text-xl font-bold text-white tracking-tight">
+          <h2 className="text-xl font-bold text-[#24150D] tracking-tight">
             Ask Kapil: Real-World Scenarios
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#5C4535] mt-1">
             Selected wisdom from high-stakes deployments.
           </p>
         </div>
@@ -176,10 +176,10 @@ export const MentorKapilView: React.FC = () => {
               <button
                 key={idx}
                 onClick={() => setSelectedTopic(idx)}
-                className={`w-full text-left p-3.5 rounded-xl border text-xs font-medium transition-all ${
+                className={`w-full text-left p-3.5 rounded-xl border text-xs font-semibold transition-all ${
                   selectedTopic === idx
-                    ? 'bg-slate-800 border-emerald-400 text-white'
-                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                    ? 'bg-[#FAF7F2] border-[#7C3E1D] text-[#7C3E1D] shadow-xs'
+                    : 'bg-[#FFFFFF] border-[#E3D8C6] text-[#5C4535] hover:text-[#24150D] hover:border-[#D5C4AC]'
                 }`}
               >
                 {fq.question}
@@ -187,11 +187,11 @@ export const MentorKapilView: React.FC = () => {
             ))}
           </div>
 
-          <div className="md:col-span-7 p-5 bg-slate-950 border border-slate-800 rounded-xl space-y-3">
-            <span className="text-xs font-mono text-emerald-400 font-bold uppercase">
+          <div className="md:col-span-7 p-5 bg-[#FAF7F2] border border-[#D5C4AC] rounded-xl space-y-3">
+            <span className="text-xs font-mono text-[#7C3E1D] font-bold uppercase">
               Kapil's Field Counsel:
             </span>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#3D291C] leading-relaxed font-medium">
               "{fieldQuestions[selectedTopic].answer}"
             </p>
           </div>
