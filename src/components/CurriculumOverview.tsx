@@ -7,12 +7,10 @@ import {
   Sparkles,
   Layers,
   Terminal,
-  Zap,
-  Shield,
   Play,
   FileCode2,
 } from 'lucide-react';
-import heroBanner from '../assets/images/fde_command_center_hero_1792041458720.jpg';
+import heroBanner from '../assets/images/Kapil_launch_FDE.png';
 
 interface CurriculumOverviewProps {
   curriculum: DayCurriculum[];
@@ -49,18 +47,9 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
     <div className="w-full max-w-7xl mx-auto px-6 py-8 space-y-8 bg-[#FBF8F3] text-[#24150D]">
       {/* Hero Banner Section with Cream & Espresso Grading */}
       <div className="relative rounded-2xl overflow-hidden border border-[#D5C4AC] bg-[#231710] shadow-xl">
-        <div className="relative h-64 sm:h-76 w-full overflow-hidden">
-          <img
-            src={heroBanner}
-            alt="Forward Deployment Command Center"
-            className="w-full h-full object-cover object-center opacity-45 scale-105"
-          />
-          {/* Measured Scrim for WCAG AA readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A110B] via-[#1A110B]/85 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1A110B] via-[#1A110B]/80 to-transparent" />
-
+        <div className="relative w-full flex flex-col md:flex-row items-center justify-between p-6 sm:p-8 gap-6 bg-[#231710]">
           {/* Hero Content */}
-          <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-end max-w-3xl">
+          <div className="flex-1 max-w-2xl">
             <div className="flex items-center gap-2 text-xs font-mono text-[#E4C5A0] mb-2 tracking-wide">
               <span className="w-2 h-2 rounded-full bg-[#E4C5A0]" />
               <span>FORWARD DEPLOYMENT ENGINEERING WORKSHOP · POWERED BY KAPIL</span>
@@ -72,13 +61,13 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
               Master the exact technical challenges faced by Forward Deployment Engineers at Palantir, Databricks, and Scale AI: schema drift, CDC streams, ontology graphs, P0 outages, and executive defenses.
             </p>
 
-            <div className="flex items-center gap-3 mt-5">
+            <div className="flex flex-wrap items-center gap-3 mt-5">
               <button
                 onClick={() => {
                   onSelectDay(learner.currentDay || 1);
                   onOpenIDE();
                 }}
-                className="flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-[#FAF6EE] bg-[#7C3E1D] hover:bg-[#663216] rounded-lg shadow-md transition-all"
+                className="flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-[#FAF6EE] bg-[#7C3E1D] hover:bg-[#663216] rounded-lg shadow-md transition-all cursor-pointer"
               >
                 <Play className="w-4 h-4 fill-current" />
                 <span>Resume Day {learner.currentDay || 1} in IDE</span>
@@ -87,6 +76,15 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
                 Learner: <span className="text-[#FAF6EE] font-semibold">{learner.name || 'Anonymous'}</span> · Track: <span className="text-[#E4C5A0]">{learner.targetRole}</span>
               </div>
             </div>
+          </div>
+
+          {/* Authentic Kapil FDE Launch Poster Card */}
+          <div className="w-44 sm:w-52 md:w-64 shrink-0 rounded-xl overflow-hidden border-2 border-[#8C4A23]/60 bg-[#160E0A] shadow-xl p-1 flex items-center justify-center">
+            <img
+              src={heroBanner}
+              alt="Kapil Narula - Forward Deployment Engineering"
+              className="w-full h-auto object-contain rounded-lg"
+            />
           </div>
         </div>
 

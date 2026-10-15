@@ -15,7 +15,7 @@ import {
   Play,
   AlertTriangle,
 } from 'lucide-react';
-import goldEmblem from '../assets/images/fde_cert_gold_emblem_1792041458799.jpg';
+import kapilPhotoEmblem from '../assets/images/Kapil_launch_FDE.png';
 
 interface CertificateViewProps {
   learner: LearnerProfile;
@@ -252,12 +252,12 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
             <span className="text-[#7C3E1D] font-bold text-[11px] block">{learner.certificateId}</span>
           </div>
 
-          {/* Golden Seal Generated Asset */}
-          <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-[#8C4A23] shadow-lg shadow-[#8C4A23]/20 shrink-0">
+          {/* Authentic Kapil FDE Launch Badge */}
+          <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-[#8C4A23] bg-[#1C140E] shadow-lg shadow-[#8C4A23]/20 shrink-0 flex items-center justify-center p-0.5">
             <img
-              src={goldEmblem}
-              alt="Engineering Excellence Golden Crest"
-              className="w-full h-full object-cover"
+              src={kapilPhotoEmblem}
+              alt="Kapil Narula - Forward Deployment Engineering"
+              className="w-full h-full object-contain"
             />
           </div>
 
