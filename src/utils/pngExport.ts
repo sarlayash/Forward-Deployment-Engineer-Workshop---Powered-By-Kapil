@@ -22,6 +22,16 @@ interface CertificateExportParams {
   date?: string;
 }
 
+function loadImage(src: string): Promise<HTMLImageElement | null> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
 // Helper to wrap text with line breaks and return total height
 function wrapCanvasText(
   ctx: CanvasRenderingContext2D,
@@ -305,7 +315,7 @@ export function exportDailyBadgeToPng(params: DailyBadgeExportParams): Promise<v
  * Generates and downloads a pristine 2400x1600px ultra high-resolution landscape PNG certificate
  */
 export function exportCertificateToPng(params: CertificateExportParams): Promise<void> {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
       const canvas = document.createElement('canvas');
       canvas.width = 2400;
@@ -488,7 +498,7 @@ export function exportCertificateToPng(params: CertificateExportParams): Promise
       ctx.font = 'bold 20px "Courier New", monospace';
       ctx.fillText(certificateId, 240, footerY + 110);
 
-      // Center Column: Golden Medallion Crest
+      // Center Column: Golden Medallion Crest with Authentic Kapil Launch Badge
       const sealX = 1200;
       const sealY = footerY + 50;
 
@@ -503,25 +513,41 @@ export function exportCertificateToPng(params: CertificateExportParams): Promise
       ctx.arc(sealX, sealY, 78, 0, Math.PI * 2);
       ctx.stroke();
 
-      ctx.strokeStyle = '#D5A872';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(sealX, sealY, 70, 0, Math.PI * 2);
-      ctx.stroke();
+      const kapilImg = await loadImage('/Kapil_launch_FDE.png');
+      if (kapilImg) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(sealX, sealY, 74, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.drawImage(kapilImg, sealX - 74, sealY - 74, 148, 148);
+        ctx.restore();
 
-      ctx.fillStyle = '#7C3E1D';
-      ctx.font = 'bold 13px "Courier New", monospace';
-      ctx.letterSpacing = '2px';
-      ctx.textAlign = 'center';
-      ctx.fillText('★ 300 MCQS ★', sealX, sealY - 26);
+        ctx.strokeStyle = '#8C4A23';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(sealX, sealY, 74, 0, Math.PI * 2);
+        ctx.stroke();
+      } else {
+        ctx.strokeStyle = '#D5A872';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(sealX, sealY, 70, 0, Math.PI * 2);
+        ctx.stroke();
 
-      ctx.fillStyle = '#24150D';
-      ctx.font = 'bold 24px "Georgia", serif';
-      ctx.fillText('PASSED ≥90%', sealX, sealY + 8);
+        ctx.fillStyle = '#7C3E1D';
+        ctx.font = 'bold 13px "Courier New", monospace';
+        ctx.letterSpacing = '2px';
+        ctx.textAlign = 'center';
+        ctx.fillText('★ 300 MCQS ★', sealX, sealY - 26);
 
-      ctx.fillStyle = '#8C4A23';
-      ctx.font = 'bold 12px "Courier New", monospace';
-      ctx.fillText('120 MIN TIMED', sealX, sealY + 34);
+        ctx.fillStyle = '#24150D';
+        ctx.font = 'bold 24px "Georgia", serif';
+        ctx.fillText('PASSED ≥90%', sealX, sealY + 8);
+
+        ctx.fillStyle = '#8C4A23';
+        ctx.font = 'bold 12px "Courier New", monospace';
+        ctx.fillText('120 MIN TIMED', sealX, sealY + 34);
+      }
 
       // Right Column: Kapil Narula Signature
       ctx.textAlign = 'right';
