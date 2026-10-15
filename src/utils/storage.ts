@@ -16,13 +16,31 @@ export const DEFAULT_LEARNER_PROFILE: LearnerProfile = {
   certificateId: `FDE-KN-${Math.floor(10000 + Math.random() * 90000)}`,
   hasAgreedToFounderNote: false,
   isAuthenticated: false,
+  dailyAssessmentAttempts: {},
+  dailyAssessmentScores: {},
+  unlockedDailyBadges: [],
+  finalAssessmentAttempts: 0,
+  finalAssessmentScore: 0,
+  finalAssessmentPassed: false,
+  finalAssessmentAnswers: {},
 };
 
 export function loadLearnerProfile(): LearnerProfile {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULT_LEARNER_PROFILE;
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    return {
+      ...DEFAULT_LEARNER_PROFILE,
+      ...parsed,
+      dailyAssessmentAttempts: parsed.dailyAssessmentAttempts || {},
+      dailyAssessmentScores: parsed.dailyAssessmentScores || {},
+      unlockedDailyBadges: parsed.unlockedDailyBadges || [],
+      finalAssessmentAttempts: parsed.finalAssessmentAttempts || 0,
+      finalAssessmentScore: parsed.finalAssessmentScore || 0,
+      finalAssessmentPassed: !!parsed.finalAssessmentPassed,
+      finalAssessmentAnswers: parsed.finalAssessmentAnswers || {},
+    };
   } catch (err) {
     console.error('Failed to load profile from localStorage', err);
     return DEFAULT_LEARNER_PROFILE;
@@ -46,6 +64,13 @@ export function resetProgress(profile: LearnerProfile): LearnerProfile {
     xp: 0,
     codeDrafts: {},
     certificateIssued: false,
+    dailyAssessmentAttempts: {},
+    dailyAssessmentScores: {},
+    unlockedDailyBadges: [],
+    finalAssessmentAttempts: 0,
+    finalAssessmentScore: 0,
+    finalAssessmentPassed: false,
+    finalAssessmentAnswers: {},
   };
   saveLearnerProfile(reset);
   return reset;

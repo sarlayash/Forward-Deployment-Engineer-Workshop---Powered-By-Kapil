@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import {
   Sparkles,
   CheckCircle2,
@@ -8,10 +8,10 @@ import {
   X,
   RotateCcw,
   LogOut,
-  Upload,
-  Image as ImageIcon,
+  Lock,
+  ShieldCheck,
 } from 'lucide-react';
-import kapilRealPhoto from '../assets/images/mentor_kapil_narula_1792041458811.jpg';
+import kapilLaunchPoster from '../assets/images/Kapil_launch_FDE.png';
 
 interface FounderWelcomeViewProps {
   onAgreeAndProceed: () => void;
@@ -25,47 +25,7 @@ export const FounderWelcomeView: React.FC<FounderWelcomeViewProps> = ({
   onSignOff,
 }) => {
   const [agreed, setAgreed] = useState(false);
-  const [posterSrc, setPosterSrc] = useState<string>('/Kapil_launch_FDE.png');
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Load custom poster from localStorage if previously uploaded
-  useEffect(() => {
-    try {
-      const savedPoster = localStorage.getItem('fde_custom_founder_poster');
-      if (savedPoster) {
-        setPosterSrc(savedPoster);
-      }
-    } catch {
-      // Ignore localStorage read errors
-    }
-  }, []);
-
-  const handleFileUpload = (file: File) => {
-    if (!file.type.startsWith('image/')) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const result = e.target?.result as string;
-      if (result) {
-        setPosterSrc(result);
-        try {
-          localStorage.setItem('fde_custom_founder_poster', result);
-        } catch {
-          // Ignore quota errors
-        }
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFileUpload(e.dataTransfer.files[0]);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-[#FBF8F3] text-[#24150D] flex flex-col justify-between items-center py-8 px-4 sm:px-6">
@@ -107,38 +67,22 @@ export const FounderWelcomeView: React.FC<FounderWelcomeViewProps> = ({
         </div>
       </header>
 
-      {/* Main Single Poster Presentation (No 2-Column Split, No Text Extraction) */}
+      {/* Main Single Poster Presentation - Strictly Locked & Unedited */}
       <main className="w-full max-w-3xl flex flex-col items-center">
         {/* Poster Showcase Container */}
-        <div
-          onDragOver={(e) => {
-            e.preventDefault();
-            setIsDragging(true);
-          }}
-          onDragLeave={() => setIsDragging(false)}
-          onDrop={handleDrop}
-          className={`w-full relative rounded-2xl border-2 transition-all duration-200 overflow-hidden shadow-2xl bg-[#1C140E] ${
-            isDragging
-              ? 'border-[#7C3E1D] ring-4 ring-[#7C3E1D]/20 scale-[1.01]'
-              : 'border-[#D5C4AC]'
-          }`}
-        >
-          {/* Subtle Top Bar of the Poster Frame */}
+        <div className="w-full relative rounded-2xl border-2 border-[#D5C4AC] overflow-hidden shadow-2xl bg-[#1C140E]">
+          {/* Top Bar of the Poster Frame with Locked Badge */}
           <div className="px-4 py-2.5 bg-[#2A1D15] border-b border-[#4A3528] flex items-center justify-between text-xs text-[#E4C5A0]">
             <div className="flex items-center gap-2 font-mono font-bold">
               <Sparkles className="w-3.5 h-3.5 text-[#C98A4B]" />
               <span>OFFICIAL FOUNDER LAUNCH POSTER</span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#3B291D] hover:bg-[#4E3727] text-[#FAF6EE] text-[11px] font-mono border border-[#5C4535] transition cursor-pointer"
-                title="Choose Kapil_launch_FDE.png file from your device"
-              >
-                <Upload className="w-3 h-3 text-[#E4C5A0]" />
-                <span className="hidden sm:inline">Replace Poster</span>
-              </button>
+            <div className="flex items-center gap-2.5">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#231710] text-[#E4C5A0] text-[11px] font-mono border border-[#4A3528]">
+                <Lock className="w-3 h-3 text-[#C98A4B]" />
+                <span className="font-semibold">LOCKED · AUTHENTIC</span>
+              </span>
 
               <button
                 onClick={() => setIsFullscreen(true)}
@@ -151,44 +95,24 @@ export const FounderWelcomeView: React.FC<FounderWelcomeViewProps> = ({
             </div>
           </div>
 
-          {/* Hidden File Input for Poster Upload */}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                handleFileUpload(e.target.files[0]);
-              }
-            }}
-          />
-
           {/* The Poster Image (Rendered in full without cropping or artificial edits) */}
           <div className="relative w-full flex justify-center items-center bg-[#1C140E] p-2 sm:p-4">
             <img
-              src={posterSrc}
+              src={kapilLaunchPoster}
               alt="Kapil Narula - Forward Deployment Engineer Launch Poster & Founder Note"
-              className="w-full h-auto max-h-[80vh] object-contain rounded-lg shadow-lg cursor-zoom-in"
+              className="w-full h-auto max-h-[82vh] object-contain rounded-lg shadow-lg cursor-zoom-in select-none"
               onClick={() => setIsFullscreen(true)}
-              onError={(e) => {
-                // If /Kapil_launch_FDE.png failed, fallback to the real photo of Kapil
-                const target = e.currentTarget;
-                if (target.src !== kapilRealPhoto) {
-                  target.src = kapilRealPhoto;
-                }
-              }}
             />
           </div>
 
-          {/* Bottom Quick-Tip Caption */}
-          <div className="px-4 py-2 bg-[#1C140E] border-t border-[#3B291D] flex items-center justify-between text-[11px] font-mono text-[#A89480]">
-            <span className="flex items-center gap-1.5">
-              <ImageIcon className="w-3.5 h-3.5 text-[#C98A4B]" />
-              <span>Kapil_launch_FDE.png · Full Launch Poster</span>
+          {/* Bottom Verification Caption */}
+          <div className="px-4 py-2.5 bg-[#1C140E] border-t border-[#3B291D] flex items-center justify-between text-[11px] font-mono text-[#A89480]">
+            <span className="flex items-center gap-1.5 text-[#E4C5A0]">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#C98A4B]" />
+              <span>Kapil_launch_FDE.png · Official Founding Mentor Poster</span>
             </span>
             <span className="text-[#DDD0C0] hidden sm:inline">
-              Click image to enlarge
+              Click image to enlarge full resolution
             </span>
           </div>
         </div>
@@ -249,7 +173,7 @@ export const FounderWelcomeView: React.FC<FounderWelcomeViewProps> = ({
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={posterSrc}
+              src={kapilLaunchPoster}
               alt="Founder Launch Poster Fullscreen"
               className="w-full h-auto max-h-[90vh] object-contain rounded-lg shadow-2xl"
             />

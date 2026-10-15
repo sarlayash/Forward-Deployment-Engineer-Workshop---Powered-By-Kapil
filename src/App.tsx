@@ -24,6 +24,7 @@ import { MentorKapilView } from './components/MentorKapilView';
 import { OnboardingModal } from './components/OnboardingModal';
 import { FounderWelcomeView } from './components/FounderWelcomeView';
 import { LoginPage } from './components/LoginPage';
+import { FinalAssessmentView } from './components/FinalAssessmentView';
 
 export default function App() {
   const [learner, setLearner] = useState<LearnerProfile>(loadLearnerProfile);
@@ -91,10 +92,32 @@ export default function App() {
         ...learner.codeDrafts,
         [dayId]: codeDraft,
       },
-      certificateIssued: isAllComplete,
+      certificateIssued: isAllComplete && learner.finalAssessmentPassed,
     };
 
     updateLearner(updatedProfile);
+  };
+
+  // Final Assessment Passed Handler (score >= 90%)
+  const handlePassFinalAssessment = (score: number, attempts: number) => {
+    const updated: LearnerProfile = {
+      ...learner,
+      finalAssessmentScore: Math.max(score, learner.finalAssessmentScore || 0),
+      finalAssessmentAttempts: attempts,
+      finalAssessmentPassed: true,
+      certificateIssued: true,
+    };
+    updateLearner(updated);
+  };
+
+  // Final Assessment Failed Handler
+  const handleFailFinalAssessment = (score: number, attempts: number) => {
+    const updated: LearnerProfile = {
+      ...learner,
+      finalAssessmentScore: Math.max(score, learner.finalAssessmentScore || 0),
+      finalAssessmentAttempts: attempts,
+    };
+    updateLearner(updated);
   };
 
   // 1. Initial State: Founder's Note screen if not yet agreed or when explicitly reviewed
@@ -188,6 +211,17 @@ export default function App() {
           <BadgesView
             learner={learner}
             onOpenIDEForDay={handleOpenDayInIDE}
+            onUpdateLearner={updateLearner}
+            onGoToFinalAssessment={() => setCurrentTab('final-assessment')}
+          />
+        )}
+
+        {currentTab === 'final-assessment' && (
+          <FinalAssessmentView
+            learner={learner}
+            onPassFinalAssessment={handlePassFinalAssessment}
+            onFailFinalAssessment={handleFailFinalAssessment}
+            onGoToCertificate={() => setCurrentTab('certificate')}
           />
         )}
 
@@ -195,6 +229,7 @@ export default function App() {
           <CertificateView
             learner={learner}
             totalDays={CURRICULUM_DATA.length}
+            onGoToFinalAssessment={() => setCurrentTab('final-assessment')}
           />
         )}
 

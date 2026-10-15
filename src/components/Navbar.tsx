@@ -12,6 +12,7 @@ import {
   RotateCcw,
   Sparkles,
   ChevronDown,
+  Clock,
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -39,6 +40,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'curriculum', label: 'Curriculum (15 Days)', icon: BookOpen },
     { id: 'ide', label: 'Hands-on IDE', icon: FileCode2 },
     { id: 'badges', label: 'Badges', icon: Award },
+    { id: 'final-assessment', label: 'Final Exam (120m)', icon: Clock },
     { id: 'certificate', label: 'Certification', icon: GraduationCap },
     { id: 'interview', label: 'Interview Vault', icon: Briefcase },
     { id: 'mentor', label: 'Mentor Kapil', icon: Terminal },

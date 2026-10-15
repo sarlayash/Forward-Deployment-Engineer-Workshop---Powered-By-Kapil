@@ -9,7 +9,7 @@ import {
   MessageSquare,
   ArrowRight,
 } from 'lucide-react';
-import kapilRealPhoto from '../assets/images/mentor_kapil_narula_1792041458811.jpg';
+import kapilRealPhoto from '../assets/images/Kapil_launch_FDE.png';
 
 export const MentorKapilView: React.FC = () => {
   const [selectedTopic, setSelectedTopic] = useState<number>(0);
@@ -76,14 +76,20 @@ export const MentorKapilView: React.FC = () => {
       {/* Mentor Hero Card with Cream and Espresso Borders */}
       <div className="bg-[#FFFFFF] border border-[#D5C4AC] rounded-2xl overflow-hidden shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-12 items-stretch">
-          {/* Portrait Column */}
-          <div className="md:col-span-5 relative min-h-[320px] bg-[#1C140E]">
-            <img
-              src={kapilRealPhoto}
-              alt="Kapil Narula - Forward Deployment Lead"
-              className="w-full h-full object-cover object-top"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1C140E] via-transparent to-transparent md:hidden" />
+          {/* Portrait Column - Real Image Preserved Uncropped */}
+          <div className="md:col-span-5 relative bg-[#1C140E] flex flex-col items-center justify-center p-4 sm:p-6 border-b md:border-b-0 md:border-r border-[#3D291C]">
+            <div className="w-full max-w-[340px] rounded-xl overflow-hidden shadow-2xl border-2 border-[#5C4535] bg-[#2A1D15]">
+              <img
+                src={kapilRealPhoto}
+                alt="Kapil Narula - Founding Forward Deployment Mentor & Enterprise Architect"
+                className="w-full h-auto object-contain select-none block"
+              />
+            </div>
+            <div className="mt-3 text-center">
+              <span className="text-[11px] font-mono text-[#E4C5A0] tracking-wider uppercase">
+                Official Launch Document · Kapil Narula
+              </span>
+            </div>
           </div>
 
           {/* Bio & Intro Column */}
